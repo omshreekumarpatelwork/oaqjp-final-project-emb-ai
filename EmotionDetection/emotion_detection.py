@@ -6,6 +6,7 @@ def emotion_detector(text_to_analyze):
     """
     Analyze text and return emotion scores and dominant emotion.
     """
+
     url = (
         "https://sn-watson-emotion.labs.skills.network/"
         "v1/watson.runtime.nlp.v1/NlpService/EmotionPredict"
@@ -28,6 +29,17 @@ def emotion_detector(text_to_analyze):
         json=input_json,
         timeout=10
     )
+
+    # Task 7: Handle HTTP 400 error
+    if response.status_code == 400:
+        return {
+            "anger": None,
+            "disgust": None,
+            "fear": None,
+            "joy": None,
+            "sadness": None,
+            "dominant_emotion": None
+        }
 
     response_dict = json.loads(response.text)
 
